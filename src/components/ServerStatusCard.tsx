@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Server } from 'lucide-react';
 
@@ -17,23 +16,53 @@ const ServerStatusCard = () => {
     responseTime: 0
   });
 
-  // Simulate server status check
+  // Real server status check
   useEffect(() => {
-    const checkServer = () => {
+    const checkServer = async () => {
       setServerStatus(prev => ({ ...prev, status: 'checking' }));
       
-      // Simulate API call with random result
-      setTimeout(() => {
-        const isOnline = Math.random() > 0.3; // 70% chance of being online
-        const responseTime = Math.floor(Math.random() * 100) + 20;
+      const startTime = Date.now();
+      
+      try {
+        console.log('Checking server status at:', `http://${serverStatus.url}`);
         
+        // Make actual HTTP request to the server
+        const response = await fetch(`http://${serverStatus.url}`, {
+          method: 'GET',
+          mode: 'cors', // Enable CORS
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        const responseTime = Date.now() - startTime;
+        
+        if (response.ok) {
+          console.log('Server is online, response time:', responseTime + 'ms');
+          setServerStatus({
+            url: 'localhost:3000',
+            status: 'online',
+            lastChecked: new Date().toLocaleTimeString(),
+            responseTime: responseTime
+          });
+        } else {
+          console.log('Server responded with error:', response.status);
+          setServerStatus({
+            url: 'localhost:3000',
+            status: 'offline',
+            lastChecked: new Date().toLocaleTimeString(),
+            responseTime: 0
+          });
+        }
+      } catch (error) {
+        console.log('Server check failed:', error);
         setServerStatus({
           url: 'localhost:3000',
-          status: isOnline ? 'online' : 'offline',
+          status: 'offline',
           lastChecked: new Date().toLocaleTimeString(),
-          responseTime: isOnline ? responseTime : 0
+          responseTime: 0
         });
-      }, 1500);
+      }
     };
 
     checkServer();
