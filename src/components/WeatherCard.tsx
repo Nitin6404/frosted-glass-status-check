@@ -31,7 +31,7 @@ const WeatherCard = () => {
         
         // Using a free weather API (OpenWeatherMap) - you'll need to get an API key
         // For now, using a mock API that returns realistic data
-        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=San Francisco&appid=YOUR_API_KEY&units=metric');
+        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=San Francisco&appid=aa18ffa15b8e3b02c851f39b1b0cd34b&units=metric');
         
         if (!response.ok) {
           throw new Error('Weather API failed');

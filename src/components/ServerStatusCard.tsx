@@ -11,7 +11,7 @@ interface ServerStatus {
 
 const ServerStatusCard = () => {
   const [serverStatus, setServerStatus] = useState<ServerStatus>({
-    url: 'localhost:3000',
+    url: 'https://backend-rs-rjj9.onrender.com/',
     status: 'checking',
     lastChecked: new Date().toLocaleTimeString(),
     responseTime: 0
@@ -41,7 +41,7 @@ const ServerStatusCard = () => {
         if (response.ok) {
           console.log('Server is online, response time:', responseTime + 'ms');
           setServerStatus({
-            url: 'localhost:3000',
+            url: 'https://backend-rs-rjj9.onrender.com/',
             status: 'online',
             lastChecked: new Date().toLocaleTimeString(),
             responseTime: responseTime
@@ -49,7 +49,7 @@ const ServerStatusCard = () => {
         } else {
           console.log('Server responded with error:', response.status);
           setServerStatus({
-            url: 'localhost:3000',
+            url: 'https://backend-rs-rjj9.onrender.com/',
             status: 'offline',
             lastChecked: new Date().toLocaleTimeString(),
             responseTime: 0
@@ -58,7 +58,7 @@ const ServerStatusCard = () => {
       } catch (error) {
         console.log('Server check failed:', error);
         setServerStatus({
-          url: 'localhost:3000',
+          url: 'https://backend-rs-rjj9.onrender.com/',
           status: 'offline',
           lastChecked: new Date().toLocaleTimeString(),
           responseTime: 0
