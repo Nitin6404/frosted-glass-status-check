@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Server } from 'lucide-react';
 
@@ -74,77 +75,90 @@ const ServerStatusCard = () => {
   const getStatusIcon = () => {
     switch (serverStatus.status) {
       case 'online':
-        return <CheckCircle className="w-8 h-8 text-green-400" />;
+        return <CheckCircle className="w-12 h-12 text-green-500" strokeWidth={4} />;
       case 'offline':
-        return <XCircle className="w-8 h-8 text-red-400" />;
+        return <XCircle className="w-12 h-12 text-red-500" strokeWidth={4} />;
       case 'checking':
-        return <Clock className="w-8 h-8 text-yellow-400 animate-spin" />;
+        return <Clock className="w-12 h-12 text-yellow-500 animate-spin" strokeWidth={4} />;
     }
   };
 
   const getStatusColor = () => {
     switch (serverStatus.status) {
       case 'online':
-        return 'text-green-400';
+        return 'text-green-500';
       case 'offline':
-        return 'text-red-400';
+        return 'text-red-500';
       case 'checking':
-        return 'text-yellow-400';
+        return 'text-yellow-500';
+    }
+  };
+
+  const getCardBorder = () => {
+    switch (serverStatus.status) {
+      case 'online':
+        return 'border-green-500 shadow-[8px_8px_0px_0px_rgba(34,197,94,1)]';
+      case 'offline':
+        return 'border-red-500 shadow-[8px_8px_0px_0px_rgba(239,68,68,1)]';
+      case 'checking':
+        return 'border-yellow-500 shadow-[8px_8px_0px_0px_rgba(234,179,8,1)]';
     }
   };
 
   return (
-    <div className="backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20 shadow-2xl hover:bg-white/15 transition-all duration-300 group">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <Server className="w-6 h-6 text-white/80" />
-          <h2 className="text-2xl font-bold text-white">Server Status</h2>
+    <div className={`bg-white text-black p-8 border-8 ${getCardBorder()} hover:translate-x-2 hover:translate-y-2 hover:shadow-[4px_4px_0px_0px] transition-all duration-200`}>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <Server className="w-8 h-8 text-black" strokeWidth={3} />
+          <h2 className="text-3xl font-black uppercase tracking-tighter">SERVER</h2>
         </div>
         {getStatusIcon()}
       </div>
       
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <span className="text-white/70">Endpoint:</span>
-          <span className="text-white font-mono text-sm bg-black/20 px-3 py-1 rounded-lg">
-            {serverStatus.url}
-          </span>
+      <div className="space-y-6">
+        <div className="bg-black text-white p-4 font-mono text-lg">
+          <div className="flex justify-between items-center">
+            <span className="font-bold uppercase">ENDPOINT:</span>
+            <span className="text-yellow-400 font-bold">
+              {serverStatus.url}
+            </span>
+          </div>
         </div>
         
-        <div className="flex justify-between items-center">
-          <span className="text-white/70">Status:</span>
-          <span className={`font-semibold capitalize ${getStatusColor()}`}>
+        <div className="flex justify-between items-center border-b-4 border-black pb-2">
+          <span className="font-black uppercase text-xl">STATUS:</span>
+          <span className={`font-black uppercase text-2xl ${getStatusColor()}`}>
             {serverStatus.status}
           </span>
         </div>
         
         {serverStatus.status === 'online' && (
-          <div className="flex justify-between items-center">
-            <span className="text-white/70">Response Time:</span>
-            <span className="text-green-400 font-semibold">
-              {serverStatus.responseTime}ms
+          <div className="flex justify-between items-center border-b-4 border-black pb-2">
+            <span className="font-black uppercase text-xl">RESPONSE:</span>
+            <span className="text-green-500 font-black text-2xl">
+              {serverStatus.responseTime}MS
             </span>
           </div>
         )}
         
         <div className="flex justify-between items-center">
-          <span className="text-white/70">Last Checked:</span>
-          <span className="text-white/90 text-sm">
+          <span className="font-black uppercase text-xl">CHECKED:</span>
+          <span className="font-bold text-lg">
             {serverStatus.lastChecked}
           </span>
         </div>
       </div>
       
-      <div className="mt-6 pt-4 border-t border-white/10">
-        <div className="flex space-x-2">
-          <div className={`w-3 h-3 rounded-full ${
-            serverStatus.status === 'online' ? 'bg-green-400 animate-pulse' : 
-            serverStatus.status === 'offline' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'
+      <div className="mt-8 pt-6 border-t-4 border-black">
+        <div className="flex items-center space-x-4">
+          <div className={`w-6 h-6 border-4 border-black ${
+            serverStatus.status === 'online' ? 'bg-green-500' : 
+            serverStatus.status === 'offline' ? 'bg-red-500' : 'bg-yellow-500'
           }`}></div>
-          <span className="text-white/60 text-sm">
-            {serverStatus.status === 'online' ? 'Server is healthy' :
-             serverStatus.status === 'offline' ? 'Server is unreachable' :
-             'Checking server status...'}
+          <span className="font-bold uppercase text-lg">
+            {serverStatus.status === 'online' ? 'SYSTEM OPERATIONAL' :
+             serverStatus.status === 'offline' ? 'SYSTEM DOWN' :
+             'SYSTEM CHECKING...'}
           </span>
         </div>
       </div>

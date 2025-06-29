@@ -4,15 +4,24 @@ import React from 'react';
 const BackgroundEffects = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Animated gradient orbs */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-pink-500 to-violet-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
-      <div className="absolute top-40 left-40 w-60 h-60 bg-gradient-to-r from-green-500 to-teal-500 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse animation-delay-4000"></div>
+      {/* Brutalist geometric shapes */}
+      <div className="absolute top-10 right-10 w-32 h-32 bg-red-500 border-8 border-black transform rotate-45"></div>
+      <div className="absolute bottom-20 left-20 w-24 h-24 bg-yellow-400 border-8 border-black"></div>
+      <div className="absolute top-1/3 left-1/4 w-16 h-16 bg-blue-500 border-4 border-white transform rotate-12"></div>
+      <div className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-green-500 border-6 border-black transform -rotate-12"></div>
       
-      {/* Floating particles */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full opacity-60 animate-ping"></div>
-      <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full opacity-40 animate-ping animation-delay-1000"></div>
-      <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-white rounded-full opacity-50 animate-ping animation-delay-3000"></div>
+      {/* Bold stripes */}
+      <div className="absolute top-0 left-1/4 w-2 h-full bg-red-500 opacity-30"></div>
+      <div className="absolute top-0 right-1/3 w-4 h-full bg-yellow-400 opacity-20"></div>
+      
+      {/* Industrial grid pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="grid grid-cols-12 grid-rows-12 h-full w-full">
+          {Array.from({ length: 144 }).map((_, i) => (
+            <div key={i} className="border border-white"></div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

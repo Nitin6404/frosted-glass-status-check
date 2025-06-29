@@ -95,67 +95,73 @@ const WeatherCard = () => {
     const iconType = getWeatherIcon();
     switch (iconType) {
       case 'sunny':
-        return <Sun className="w-12 h-12 text-yellow-400" />;
+        return <Sun className="w-16 h-16 text-yellow-500" strokeWidth={4} />;
       case 'rainy':
-        return <CloudRain className="w-12 h-12 text-blue-400" />;
+        return <CloudRain className="w-16 h-16 text-blue-500" strokeWidth={4} />;
       case 'partly-cloudy':
       default:
-        return <Cloud className="w-12 h-12 text-gray-300" />;
+        return <Cloud className="w-16 h-16 text-gray-600" strokeWidth={4} />;
     }
   };
 
   return (
-    <div className="backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20 shadow-2xl hover:bg-white/15 transition-all duration-300">
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-blue-500 text-white p-8 border-8 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-2 hover:translate-y-2 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-1">Current Weather</h2>
-          <p className="text-white/70">{weatherData.location}</p>
+          <h2 className="text-3xl font-black uppercase tracking-tighter mb-2">WEATHER</h2>
+          <div className="bg-white text-black px-4 py-2 font-bold uppercase">
+            {weatherData.location}
+          </div>
           {error && (
-            <p className="text-yellow-400 text-xs mt-1">Using cached data</p>
+            <div className="bg-yellow-400 text-black px-3 py-1 mt-2 font-bold uppercase text-sm">
+              CACHED DATA
+            </div>
           )}
         </div>
         {loading ? (
-          <div className="w-12 h-12 border-2 border-white/20 border-t-white/80 rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-white border-t-black animate-spin"></div>
         ) : (
           renderWeatherIcon()
         )}
       </div>
       
-      <div className="text-center mb-6">
-        <div className="text-5xl font-bold text-white mb-2">
-          {loading ? '--' : `${weatherData.temperature}°C`}
+      <div className="text-center mb-8 bg-white text-black p-6 border-4 border-black">
+        <div className="text-7xl font-black mb-2">
+          {loading ? '--' : `${weatherData.temperature}°`}
         </div>
-        <div className="text-white/80 text-lg">
+        <div className="font-bold uppercase text-xl tracking-wide">
           {weatherData.condition}
         </div>
       </div>
       
       <div className="grid grid-cols-2 gap-4">
-        <div className="flex items-center space-x-2 bg-white/5 rounded-lg p-3">
-          <Droplets className="w-5 h-5 text-blue-400" />
-          <div>
-            <div className="text-white/70 text-sm">Humidity</div>
-            <div className="text-white font-semibold">
+        <div className="bg-black text-white p-4 border-4 border-white">
+          <div className="flex items-center justify-between mb-2">
+            <Droplets className="w-6 h-6" strokeWidth={3} />
+            <span className="font-black text-2xl">
               {loading ? '--' : `${weatherData.humidity}%`}
-            </div>
+            </span>
           </div>
+          <div className="font-bold uppercase text-sm">HUMIDITY</div>
         </div>
         
-        <div className="flex items-center space-x-2 bg-white/5 rounded-lg p-3">
-          <Wind className="w-5 h-5 text-gray-400" />
-          <div>
-            <div className="text-white/70 text-sm">Wind</div>
-            <div className="text-white font-semibold">
-              {loading ? '--' : `${weatherData.windSpeed} km/h`}
-            </div>
+        <div className="bg-black text-white p-4 border-4 border-white">
+          <div className="flex items-center justify-between mb-2">
+            <Wind className="w-6 h-6" strokeWidth={3} />
+            <span className="font-black text-2xl">
+              {loading ? '--' : `${weatherData.windSpeed}`}
+            </span>
           </div>
+          <div className="font-bold uppercase text-sm">WIND KM/H</div>
         </div>
       </div>
       
-      <div className="mt-6 pt-4 border-t border-white/10">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-white/60">Last updated:</span>
-          <span className="text-white/80">{new Date().toLocaleTimeString()}</span>
+      <div className="mt-8 pt-6 border-t-4 border-white">
+        <div className="flex items-center justify-between">
+          <span className="font-bold uppercase">LAST UPDATE:</span>
+          <span className="font-bold bg-yellow-400 text-black px-2 py-1">
+            {new Date().toLocaleTimeString()}
+          </span>
         </div>
       </div>
     </div>
