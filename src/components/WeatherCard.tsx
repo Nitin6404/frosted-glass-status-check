@@ -28,19 +28,24 @@ const WeatherCard = () => {
     const fetchWeatherData = async () => {
       try {
         console.log('Fetching weather data...');
+
+        // fetch whether based on user location 
+      const locationResponse = await fetch('https://ipapi.co/json/');
+        const locationData = await locationResponse.json();
+        const location = locationData.city + ', ' + locationData.country;
         
         // Using a free weather API (OpenWeatherMap) - you'll need to get an API key
         // For now, using a mock API that returns realistic data
-        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=San Francisco&appid=aa18ffa15b8e3b02c851f39b1b0cd34b&units=metric');
+        const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=aa18ffa15b8e3b02c851f39b1b0cd34b&units=metric`);
         
-        if (!response.ok) {
+        if (!weatherResponse.ok) {
           throw new Error('Weather API failed');
         }
         
-        const data = await response.json();
+        const data = await weatherResponse.json();
         
         setWeatherData({
-          location: `${data.name}, ${data.sys.country}`,
+          location: location,
           temperature: Math.round(data.main.temp),
           condition: data.weather[0].main,
           humidity: data.main.humidity,
@@ -54,7 +59,7 @@ const WeatherCard = () => {
         console.log('Weather API failed, using static data:', error);
         // Fallback to static data if API fails
         setWeatherData({
-          location: 'San Francisco, CA',
+          location: 'Loading...',
           temperature: 22,
           condition: 'Partly Cloudy',
           humidity: 65,

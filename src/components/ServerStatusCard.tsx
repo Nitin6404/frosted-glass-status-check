@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Server } from 'lucide-react';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'localhost:3000';
+
 interface ServerStatus {
   url: string;
   status: 'online' | 'offline' | 'checking';
@@ -11,7 +13,7 @@ interface ServerStatus {
 
 const ServerStatusCard = () => {
   const [serverStatus, setServerStatus] = useState<ServerStatus>({
-    url: 'https://backend-rs-rjj9.onrender.com/',
+    url: SERVER_URL,
     status: 'checking',
     lastChecked: new Date().toLocaleTimeString(),
     responseTime: 0
@@ -25,10 +27,10 @@ const ServerStatusCard = () => {
       const startTime = Date.now();
       
       try {
-        console.log('Checking server status at:', `http://${serverStatus.url}`);
+        console.log('Checking server status at:', `https://${SERVER_URL}`);
         
         // Make actual HTTP request to the server
-        const response = await fetch(`http://${serverStatus.url}`, {
+        const response = await fetch(`https://${SERVER_URL}`, {
           method: 'GET',
           mode: 'cors', // Enable CORS
           headers: {
@@ -41,7 +43,7 @@ const ServerStatusCard = () => {
         if (response.ok) {
           console.log('Server is online, response time:', responseTime + 'ms');
           setServerStatus({
-            url: 'https://backend-rs-rjj9.onrender.com/',
+            url: SERVER_URL,
             status: 'online',
             lastChecked: new Date().toLocaleTimeString(),
             responseTime: responseTime
@@ -49,7 +51,7 @@ const ServerStatusCard = () => {
         } else {
           console.log('Server responded with error:', response.status);
           setServerStatus({
-            url: 'https://backend-rs-rjj9.onrender.com/',
+            url: SERVER_URL,
             status: 'offline',
             lastChecked: new Date().toLocaleTimeString(),
             responseTime: 0
@@ -58,7 +60,7 @@ const ServerStatusCard = () => {
       } catch (error) {
         console.log('Server check failed:', error);
         setServerStatus({
-          url: 'https://backend-rs-rjj9.onrender.com/',
+          url: SERVER_URL,
           status: 'offline',
           lastChecked: new Date().toLocaleTimeString(),
           responseTime: 0
